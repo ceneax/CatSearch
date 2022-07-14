@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>{{.params.Query}} - CatSearch</title>
+	<link rel="icon" href="../static/img/favicon.svg">
+	<link rel="stylesheet" href="../static/css/search.css">
+</head>
+<body>
+<div class="container">
+	<div style="padding-left: 70px; padding-top: 40px; align-items: flex-start;">
+		<div class="flex-row" style="justify-content: space-between;">
+			<div style="display: flex;position: relative;width: 100%;">
+				<div class="flex-row" style="width: 100%;max-width: 750px;">
+					<div class="flex-column-center">
+						<a class="search-logo-rainbow-container flex-row-center" href="/">
+							<img class="search-logo-rainbow" src="../static/img/logo.svg" alt>
+						</a>
+					</div>
+					<div class="input-section flex-column">
+						<div class="input-with-suggestion">
+							<div class="input-group-container flex-row-center" style="margin-left: 40px; padding-right: 20px;">
+								<input id="search-input" class="input-box" value="{{.params.Query}}" autocomplete="off" style="max-width: 750px; background-color: rgb(255, 255, 255);">
+								<div class="flex-row-center">
+									<img class="close-icon" src="../static/img/icon_close.png" alt>
+									<div class="divider"></div>
+								</div>
+								<img id="search-icon" class="search-icon" src="../static/img/icon_search_color.png" alt>
+							</div>
+							<div class="progress-loading" style="margin-left: 62px; max-width: 605px;">
+								<div class="progress" style="width: 100%; opacity: 0;"></div>
+							</div>
+							<div style="overflow: hidden;">
+								<div class="flex-between-center search-input-bottom-bar" style="margin-left: 62px;">
+									<div class="flex-row-center">
+										<div class="search-tab-items flex-row-center" style="color: rgb(25, 115, 232);">
+											<img src="../static/img/icon_search_color.png" alt>
+											全部
+										</div>
+										<div class="search-tab-items flex-row-center" style="color: rgb(77, 81, 86);">
+											<img src="../static/img/icon_img_black_white.svg" alt>
+											图片
+										</div>
+									</div>
+									<div class="search-filter-container flex-row-center" style="margin-right: 20px;">
+										<a class="ant-dropdown-trigger filter-selector flex-row-center filter-selector-container" style="font-family: normal,serif;">
+											不限语言
+											<img src="../static/img/icon_arrow_down.svg" alt>
+										</a>
+										<a class="ant-dropdown-trigger filter-selector flex-row-center filter-selector-container" style="font-weight: normal;">
+											不限时间
+											<img src="../static/img/icon_arrow_down.svg" alt>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="result-list-with-footer flex-column" style="margin-top: 20px;">
+							<div style="margin-left: 60px;"></div>
+							<div class="organic-results" style="margin-left: 60px; max-width: 630px;">
+								{{if .hasCodeAnswer}}
+								<div class="code-block-container">
+									<div class="flex-row-center" style="margin-bottom: 10px;">
+										<div class="code-block-title">代码智能搜索结果</div>
+									</div>
+									<div class="answer-content-container">
+										<div class="labels-container">
+											{{range .result.CodeAnswer.Tags}}
+											<div class="flex-row-center" style="margin-right: 20px;">
+												<span class="label-icon" style="background-color: rgb(40, 144, 238);"></span>
+												{{.}}
+											</div>
+											{{end}}
+										</div>
+										<div class="flex-row" style="margin-left: 10px;">
+											<div class="code-list-container">
+												<div class="code-description" style="margin-bottom: 15px; display: inline; line-height: 1.5;">
+													{{.result.CodeAnswer.Ans}}
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="original-link flex-row-center">
+										来源：
+										<a href="{{.result.CodeAnswer.Url}}" target="_blank">{{.result.CodeAnswer.Title}}</a>
+									</div>
+									<div class="flex-row-center" style="max-width: 590px; margin-top: 16px; padding-right: 10px;">
+										<div style="width: 100%; height: 1px; background: rgb(235, 235, 235);"></div>
+										<div style="margin-left: 12px;"></div>
+										<div class="search-results-feedback-text"><span>提供反馈</span></div>
+									</div>
+								</div>
+								{{end}}
+								{{if .hasAnswer}}
+								<div class="code-block-container">
+									<div class="flex-row-center" style="margin-bottom: 10px;">
+										<div class="code-block-title">推荐结果</div>
+									</div>
+									<div class="answer-content-container">
+										<div class="labels-container">
+											<div class="flex-row-center" style="margin-right: 20px;">
+												<span class="label-icon" style="background-color: rgb(40, 144, 238);"></span>
+												{{.params.Query}}
+											</div>
+										</div>
+										<div class="flex-row" style="margin-left: 10px;">
+											<div class="code-list-container">
+												<div class="code-description" style="margin-bottom: 15px; display: inline; line-height: 1.5;">
+													{{range .result.Answer.Ans}}
+													{{.}}<br/>
+													{{end}}
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="original-link flex-row-center">
+										来源：
+										<a href="{{.result.Answer.Url}}" target="_blank">{{.result.Answer.Title}}</a>
+									</div>
+									<div class="flex-row-center" style="max-width: 590px; margin-top: 16px; padding-right: 10px;">
+										<div style="width: 100%; height: 1px; background: rgb(235, 235, 235);"></div>
+										<div style="margin-left: 12px;"></div>
+										<div class="search-results-feedback-text"><span>提供反馈</span></div>
+									</div>
+								</div>
+								{{end}}
+								{{if .hasCard}}
+								<div class="code-block-container">
+									<div class="flex-row-center" style="margin-bottom: 10px;">
+										<div class="code-block-title">百科</div>
+									</div>
+									<div class="answer-content-container">
+										<div class="labels-container">
+											<div class="flex-row-center" style="margin-right: 20px;">
+												<span class="label-icon" style="background-color: rgb(40, 144, 238);"></span>
+												{{.result.Card.Title}}
+											</div>
+											<div class="flex-row-center" style="margin-right: 20px;">
+												<span class="label-icon" style="background-color: rgb(40, 144, 238);"></span>
+												{{.result.Card.Category}}
+											</div>
+										</div>
+										<div class="flex-row" style="margin-left: 10px;">
+											<div class="code-list-container">
+												<div class="code-description" style="margin-bottom: 15px; display: inline; line-height: 1.5;">
+													<p>{{.result.Card.Content}}</p><br/>
+													{{range $k, $v := .result.Card.Info}}
+													{{$k}}：{{$v}}<br/>
+													{{end}}
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="flex-row-center" style="max-width: 590px; margin-top: 16px; padding-right: 10px;">
+										<div style="width: 100%; height: 1px; background: rgb(235, 235, 235);"></div>
+										<div style="margin-left: 12px;"></div>
+										<div class="search-results-feedback-text"><span>提供反馈</span></div>
+									</div>
+								</div>
+								{{end}}
+								{{range .result.Results}}
+								<div>
+									<div style="padding: 12px 20px 10px 0; border-style: solid; border-color: transparent; border-width: 1px 0;">
+										<div class="flex-row-center" style="margin-bottom: 4px;">
+											<a target="_blank" href="{{.Url.Raw}}">
+												<div class="link-tips" style="max-width: 500px; font-size: 14px;">
+													{{.Url.Parse.Host}}
+													<div class="site-path" style="font-size: 14px; margin-bottom: 2px;">
+														{{.Url.Parse.Path}}
+													</div>
+												</div>
+											</a>
+											{{if .Blocked}}
+											<div class="result-blocked">无法访问</div>
+											{{end}}
+											<div class="flex-double-center hover-style" style="margin: 0 -8px 3px 15px; width: 18px; height: 18px; border-radius: 50%;">
+												<div class="search-results-feedback-text">
+													<img src="../static/img/icon_three_dots.svg" alt>
+												</div>
+											</div>
+										</div>
+										<a target="_blank" href="{{.Url.Raw}}" class="title title-text-pc-color" style="line-height: 1.58; white-space: nowrap; max-width: 550px;">
+											{{.Title}}
+										</a>
+										<div class="snippet-container">
+											<div class="snippet" style="line-height: 1.58;">
+												{{.Content}}<span class="highlight-style"></span>
+											</div>
+										</div>
+									</div>
+									<div class="result-item-divider"></div>
+								</div>
+								{{end}}
+							</div>
+							<div style="justify-self: flex-end;">
+								<div style="max-width: 750px; width: 100%; margin: auto;">
+									<div class="bottom-pagination flex-double-center" style="position: relative; max-width: 750px; bottom: 60px; left: 0; right: 0;">
+										<div id="page-list" class="bottom-pagination-bar">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="display: flex;position: relative;width: 100%;">
+				<div class="flex-row" style="width: 100%;max-width: 750px;">
+					<div class="input-section flex-column">
+						<div class="input-with-suggestion" style="visibility: hidden !important;">
+							<div class="input-group-container flex-row-center" style="margin-left: 40px; padding-right: 20px;">
+								<input class="input-box" value="" autocomplete="off" style="max-width: 750px; background-color: rgb(255, 255, 255);">
+								<div class="flex-row-center">
+									<img class="close-icon" src="../static/img/icon_close.png" alt="">
+									<div class="divider"></div>
+								</div>
+								<img class="search-icon" src="../static/img/icon_search_color.png" alt="">
+							</div>
+							<div class="progress-loading" style="margin-left: 62px; max-width: 605px;">
+								<div class="progress" style="width: 100%; opacity: 0;"></div>
+							</div>
+							<div style="overflow: hidden;">
+								<div class="flex-between-center search-input-bottom-bar" style="margin-left: 62px;">
+									<div class="flex-row-center">
+										<div class="search-tab-items flex-row-center" style="color: rgb(25, 115, 232);">
+											<img src="../static/img/icon_search_color.png" alt="">
+											全部
+										</div>
+										<div class="search-tab-items flex-row-center" style="color: rgb(77, 81, 86);">
+											<img src="../static/img/icon_img_black_white.svg" alt="">
+											图片
+										</div>
+									</div>
+									<div class="search-filter-container flex-row-center" style="margin-right: 20px;">
+										<a class="ant-dropdown-trigger filter-selector flex-row-center filter-selector-container" style="font-family: normal,serif;">
+											不限语言
+											<img src="../static/img/icon_arrow_down.svg" alt="">
+										</a>
+										<a class="ant-dropdown-trigger filter-selector flex-row-center filter-selector-container" style="font-weight: normal;">
+											不限时间
+											<img src="../static/img/icon_arrow_down.svg" alt="">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="result-list-with-footer flex-column" style="margin-top: 20px;">
+							<div style="margin-left: 60px;"></div>
+							<div class="organic-results" style="margin-left: 60px; max-width: 630px;">
+								<div id="code-block-container"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tabs-bottom-border" style="top: 132px;"></div>
+</div>
+
+<script type="text/javascript">
+	const searchTags = {{.tags}}
+	const searchKw = '{{.params.Query}}'
+	const searchPage = '{{.params.Page}}'
+</script>
+<script type="text/javascript" src="../static/js/search.js"></script>
+</body>
+</html>

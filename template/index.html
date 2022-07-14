@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>CatSearch</title>
+    <link rel="icon" href="../static/img/favicon.svg">
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+<div id="home-container" class="flex-justify-center">
+    <div class="input-container">
+        <div class="input-group-icon">
+            <div id="logo-wrap" class="logo-wrap">
+                <img id="f-logo-img" class="logo animation" src="../static/img/logo.svg">
+                <span id="logo-emoji" class="logo-emoji">
+                    <img class="logo-arrow" src="../static/img/home_animation_arrow.svg">
+                </span>
+            </div>
+            <div id="input-group" class="input-group">
+                <img id="input-search-icon" class="search-icon" src="../static/img/icon_search_grey.png" alt="search">
+                <input id="input-box" enterkeyhint="search" class="input-control" placeholder="" autocomplete="off"
+                       style="background-color: rgb(255, 255, 255); display: inline-block;">
+                <div id="input-div" class="input-control" style="display: none;"></div>
+                <img id="close-icon" class="close-icon" src="../static/img/icon_close.png" alt="search">
+            </div>
+            <div id="operations-wrap" class="operations">
+                <div class="text-label-wrap flex-row-center">
+                    <div id="text-label" class="text-label search"
+                         onclick="searchWithValue('inputConfirm', 'pc')">
+                        搜索
+                    </div>
+                    <div id="real-time-btn" class="text-label" onclick="clickRealTimeBtn()">
+                        实时
+                    </div>
+                    <div id="real-time-refresh" class="real-time-refresh" onclick="clickRefreshBtn()">
+                        <img id="real-time-refresh-img">
+                    </div>
+                </div>
+                <div id="real-time-container" class="real-time-container"></div>
+            </div>
+            <div id="suggestion-container" class="suggestion-container" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="footer-info" id="footer-info">
+        <a id="record-number" style="display: inline;" href="https://beian.miit.gov.cn/" target="_blank"></a>
+        <a id="bottom-privacy-entry" href="#">隐私条约</a>
+        <div id="bottom-right-bar" class="bottom-setting" style="position: absolute; right: 50px;">
+            <a id="bottom-support-entry" href="#">帮助</a>
+            <div class="footer-item bottom-setting">
+                <span onclick="clickSettingBtn()" id="bottom-setting-entry">设置</span>
+                <div id="footer-setting-container" class="opacity-scale-in footer-setting-container"
+                     onclick="stopProp()" style="display: none;">
+                    <div class="footer-dark-mode-item setting flex-between-center" onclick="clickNavToSetting()">
+                        搜索设置
+                        <div class="footer-dark-mode-item-img flex-double-center">
+                            <img src="../static/img/swiper_arrow_right.svg">
+                        </div>
+                    </div>
+                    <div class="footer-dark-mode-line"></div>
+                    <div class="footer-dark-mode-item flex-row-center">
+                        <div>主题模式：</div>
+                        <div id="footer-theme-mode-light" class="footer-dark-mode-item-img flex-double-center active"
+                             onclick="clickThemeMode('light')">
+                            <img id="footer-theme-mode-img-light" src="../static/img/sun_light.svg">
+                        </div>
+                        <div id="footer-theme-mode-reading" class="footer-dark-mode-item-img flex-double-center"
+                             onclick="clickThemeMode('reading')">
+                            <img id="footer-theme-mode-img-reading" src="../static/img/book_light.svg">
+                        </div>
+                        <div id="footer-theme-mode-dark" class="footer-dark-mode-item-img flex-double-center"
+                             onclick="clickThemeMode('dark')">
+                            <img id="footer-theme-mode-img-dark" src="../static/img/moon_light.svg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="operations-container" class="operations-container" style="display: flex;">
+        <div class="toggle-tooltip-container" id="toggle-tooltip-container" style="left: 66px;">
+            <span id="toggle-tooltip-text">实验室 <br>1. Quick Code Search 功能<br>2. 实验算法 Ranking (搜索结果排序)</span>
+            <span class="toggle-tooltip-triangle"></span>
+        </div>
+        <div class="toggle-wrapper">
+            <div class="toggle dog-rollover" id="toggle-tooltip">
+                <input id="doggo" type="checkbox" style="visibility: hidden;">
+                <label id="toggle-item" class="toggle-item" for="doggo" style="background-color: #CCC;">
+                    <div class="dog">
+                        <div class="ear"></div>
+                        <div class="ear right"></div>
+                        <div class="face">
+                            <div class="eyes"></div>
+                            <div class="mouth"></div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <a href="https://勿忘国耻.中国" target="_blank" class="label-message-container" style="margin-right: 10px;">
+            勿忘国耻
+        </a>
+        <a href="https://blog.woc.cool" target="_blank" class="label-message-container" style="margin-right: 10px;">
+            博客
+        </a>
+        <div id="more-tools-switch" class="label-tools-icon flex-double-center">
+            <img src="../static/img/more_tools_icon.svg">
+        </div>
+        <div id="user-small-avatar" class="user-avatar small-avatar flex-double-center" style="display: none;"></div>
+        <div id="tools-container" class="opacity-scale-in tools-container" style="display: none;">
+            <div id="user-big-avatar" class="user-avatar flex-double-center big-avatar"
+                 style="border-radius: 81px;"></div>
+            <div id="email-detail" class="email-detail"></div>
+        </div>
+    </div>
+
+    <div id="more-tools-container" class="opacity-scale-in label-tools-container" onclick="stopProp()"
+         style="display: none;">
+        <div class="label-tools-wrap">
+            <a class="label-tools-item" href="https://ghproxy.com" target="_blank">
+                <div class="label-tools-img flex-double-center">
+                    <img src="../static/img/github.svg" style="width: 44px;height: 44px;"></div>
+                <div class="label-tools-text">Github加速</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="m-suggestion-container" id="m-suggestion-container">
+        <div class="m-input-header">
+            <div class="m-backward-container" id="m-backward-container">
+                <img class="m-back-icon" src="../static/img/keyword_arrow.svg">
+            </div>
+            <input id="m-input-box" class="m-input-box" enterkeyhint="search" placeholder="">
+            <div class="m-close-container" id="m-close-container">
+                <img class="m-close-icon" src="../static/img/keyword_close.svg">
+            </div>
+        </div>
+        <div class="m-suggestion-divider"></div>
+        <div id="m-item-container"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/js/darkreader.js"></script>
+<script type="text/javascript" src="../static/js/index.js"></script>
+</body>
+</html>
