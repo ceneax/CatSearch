@@ -1,0 +1,16 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <ShortName>CatSearch</ShortName>
+    <Tags>CatSearch</Tags>
+    <Description>CatSearch</Description>
+    <InputEncoding>UTF-8</InputEncoding>
+    <Image width="16" height="16" type="image/svg+xml">https://woc.cool/static/img/favicon.svg</Image>
+    <moz:SearchForm>https://woc.cool</moz:SearchForm>
+    <Url type="text/html" method="get" template="https://woc.cool/search?q={searchTerms}"/>
+    <Url type="application/x-suggestions+json"
+         template="https://fsoufsou.com/search-engine-listing/v1/input/suggestions">
+        <Param name="keywords" value="{searchTerms}"/>
+        <Param name="type" value="addressbar"/>
+    </Url>
+    <Url type="application/opensearchdescription+xml" rel="self" template="https://woc.cool/static/opensearch.xml"/>
+</OpenSearchDescription>
